@@ -1,9 +1,10 @@
-import './App.css'
+
+import ProductsDetails from './routes/productsDetails/productDetails'
 
 function App() {
   return (
     <>
-      <h1>vscommerce</h1>
+      <ProductsDetails/>
     </>
   )
 }

@@ -1,0 +1,23 @@
+
+
+.vsc-btn-blue {
+  border: none;
+  background-color: var(--vsc-color-btn-primary);
+  color: var(--vsc-color-btn-inverse);
+}
+
+.vsc-btn-blue:hover{
+  background-color: var(--vsc-color-btn-inverse);
+  color: var(--vsc-color-btn-primary);
+} 
+
+.vsc-btn-white {
+  border: 1px solid var(--vsc-color-btn-primary);
+  background-color: var(--vsc-color-btn-inverse);
+  color: var(--vsc-color-btn-primary);
+}
+
+.vsc-btn-white:hover{
+  background-color: var(--vsc-color-btn-primary);
+  color: var(--vsc-color-btn-inverse);
+} 

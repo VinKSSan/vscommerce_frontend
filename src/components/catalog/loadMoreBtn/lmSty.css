@@ -1,0 +1,9 @@
+.vsc-btn-load-more {
+  border: 1px solid var(--vsc-color-btn-primary);
+  padding: 10px;
+  border-radius: 4px;
+  color: var(--vsc-color-btn-primary);
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+}

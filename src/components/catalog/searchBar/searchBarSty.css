@@ -1,0 +1,51 @@
+svg {
+  transition: all ease .5s;
+}
+
+svg:hover {
+  scale: 0.8;
+  transform: rotate(450deg);
+}
+
+
+.vsc-search-bar {
+  height: 40px;
+  display: flex;
+  color: var(--vsc-color-font-primary);
+}
+
+.vsc-search-bar button, .vsc-search-bar input {
+  border: 1px solid var(--vsc-color-card-border);
+}
+
+.vsc-search-bar input {
+  width: calc(100% - 80px);
+  border-left: none;
+  border-right: none;
+  padding: 0 10px;
+  font-size: 16px;
+  color: var(--vsc-color-font-primary);
+}
+
+.vsc-search-bar input:focus {
+  outline: none;
+}
+
+.vsc-search-bar input::placeholder {
+  color: var(--vsc-color-font-placeholder);
+}
+
+.vsc-search-bar button {
+  width: 40px;
+  color: var(--vsc-color-font-primary);
+}
+
+.vsc-search-bar button[type="submit"] {
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+}
+
+.vsc-search-bar button[type="reset"] {
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+}

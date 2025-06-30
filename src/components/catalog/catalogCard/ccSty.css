@@ -1,0 +1,26 @@
+
+.vsc-catalog-card-top {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.vsc-catalog-card-top img {
+  width: 150px;
+  height: 150px;
+}
+
+.vsc-catalog-card-bottom {
+  padding: 10px 20px;
+  min-height: 110px;
+}
+
+.vsc-catalog-card-bottom h3 {
+  color: var(--vsc-color-font-secondary);
+  font-size: 20px;
+}
+
+.vsc-catalog-card-bottom h4 {
+  color: var(--vsc-color-font-primary);
+  font-size: 12px;
+}
