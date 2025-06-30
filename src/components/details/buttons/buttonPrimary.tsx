@@ -1,9 +1,14 @@
 import './detailsBtnSty.css'
 
-export default function ButtonPrimary(){
+type Props = {
+    contentBtn:string
+}
+
+
+export default function ButtonPrimary({contentBtn}:Props){
         return(
             <div className="vsc-btn vsc-btn-blue">
-                Comprar
+                {contentBtn}
             </div>
         );
 }

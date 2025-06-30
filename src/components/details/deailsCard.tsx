@@ -1,30 +1,28 @@
 import './detailsSty.css'
 
-import computerImg from '../../assets/images/computer.png'
 import ProductCategory from './productCategory/category'
+import type { ProductDTO } from '../../models/product'
 
+type Props ={
+  product: ProductDTO
+}
 
-export default function ProductsDetailsCard(){
+export default function ProductsDetailsCard({product}:Props){
     return(
         <div className="vsc-card vsc-mb20">
           <div className="vsc-product-details-top vsc-line-bottom">
-            <img src={computerImg} alt="Computador" />
+            <img src={product.imgUrl} alt="Computador" />
           </div>
           <div className="vsc-product-details-bottom">
-            <h3>R$ 5000,00</h3>
-            <h4>Computador Gamer XT</h4>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+            <h3>{product.price.toFixed(2)}</h3>
+            <h4>R$ {product.name}</h4>
+            <p>{product.description}</p>
             <div className="vsc-category-container">
-                <ProductCategory name="Eletrônicos"/>
-                <ProductCategory name="Computadores"/>
+                {
+                  product.categories.map(c=>(
+                      <ProductCategory key={c.id} name={c.name}/>
+                  ))
+                }
             </div>
           </div>
         </div>
