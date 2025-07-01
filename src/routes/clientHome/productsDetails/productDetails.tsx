@@ -4,6 +4,7 @@ import ButtonInverse from "../../../components/details/buttons/buttonInverse"
 import ButtonPrimary from "../../../components/details/buttons/buttonPrimary"
 import * as productService from '../../../services/productServices'
 import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 
@@ -43,7 +44,9 @@ export default function ProductsDetails(){
                } 
                 <div className="vsc-btn-page-container">
                     <ButtonPrimary contentBtn='comprar'/>
-                    <ButtonInverse contentBtn='inicio'/>  
+                    <Link to="/">
+                        <ButtonInverse contentBtn='inicio'/>  
+                    </Link>
                 </div>
             </section>
         </main>

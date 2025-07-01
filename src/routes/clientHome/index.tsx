@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import HeaderClient from "../../components/headerClient/header";
+import HeaderClient from "../../components/headerClient/headerCli";
 
 export default function ClientHome(){
     return(
