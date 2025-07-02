@@ -2,14 +2,11 @@ import './productDetailsSty.css'
 import ProductsDetailsCard from "../../../components/details/deailsCard"
 import ButtonInverse from "../../../components/details/buttons/buttonInverse"
 import ButtonPrimary from "../../../components/details/buttons/buttonPrimary"
-//import * as productService from '../../../services/productServices'
+import * as productService from '../../../services/productServices'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import type { ProductDTO } from '../../../models/product'
-import axios from 'axios'
-
-const host = "http://localhost:8080";
 
 
 export default function ProductsDetails(){
@@ -19,7 +16,7 @@ export default function ProductsDetails(){
     const params = useParams();
 
     useEffect(()=>{
-        axios.get(host+`/products/${params.productId}`)
+        productService.findById(Number(params.productId))
             .then(res => setProduct(res.data))
     },[params]);
 
