@@ -3,7 +3,7 @@ import ProductsDetailsCard from "../../../components/details/deailsCard"
 import ButtonInverse from "../../../components/details/buttons/buttonInverse"
 import ButtonPrimary from "../../../components/details/buttons/buttonPrimary"
 import * as productService from '../../../services/productServices'
-import { useParams } from 'react-router-dom'
+import {useNavigate, useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import type { ProductDTO } from '../../../models/product'
@@ -15,10 +15,16 @@ export default function ProductsDetails(){
 
     const params = useParams();
 
+    const navigate = useNavigate()
+
     useEffect(()=>{
         productService.findById(Number(params.productId))
             .then(res => setProduct(res.data))
-    },[params]);
+            .catch(err=>{
+                console.log(err.response.data)
+                setTimeout(()=>{navigate("/")},2000)
+            })
+    },[params,navigate]);
 
     const productNotFound = ( 
                     <div
