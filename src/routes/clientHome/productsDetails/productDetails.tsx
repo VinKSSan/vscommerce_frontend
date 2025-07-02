@@ -21,7 +21,7 @@ export default function ProductsDetails(){
     useEffect(()=>{
         axios.get(host+`/products/${params.productId}`)
             .then(res => setProduct(res.data))
-    },[]);
+    },[params]);
 
     const productNotFound = ( 
                     <div
