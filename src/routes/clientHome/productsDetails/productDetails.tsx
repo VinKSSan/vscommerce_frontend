@@ -3,6 +3,9 @@ import ProductsDetailsCard from "../../../components/details/deailsCard"
 import ButtonInverse from "../../../components/details/buttons/buttonInverse"
 import ButtonPrimary from "../../../components/details/buttons/buttonPrimary"
 import * as productService from '../../../services/productServices'
+import * as cartService from '../../../services/cartService'
+
+
 import {useNavigate, useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
@@ -25,6 +28,15 @@ export default function ProductsDetails(){
                 setTimeout(()=>{navigate("/")},2000)
             })
     },[params,navigate]);
+
+    function handleBuyClick(){
+        console.log('exec')
+        if(product) {
+            console.log('exec2')
+            cartService.addProduct(product)
+            navigate("/cart")
+        }
+    }
 
     const productNotFound = ( 
                     <div
@@ -56,7 +68,9 @@ export default function ProductsDetails(){
                                
                } 
                 <div className="vsc-btn-page-container">
-                    <ButtonPrimary contentBtn='comprar'/>
+                    <div onClick={handleBuyClick}>
+                        <ButtonPrimary  contentBtn='comprar'/>
+                    </div>
                     <Link to="/">
                         <ButtonInverse contentBtn='inicio'/>  
                     </Link>
