@@ -175,13 +175,13 @@ nav a {
 /*-----------------------------------------------------------------*/
 /* button styles */
 
-button {
+.btn, button {
   cursor: pointer;
   transition: all ease .2s;
   padding: 2px;
 }
 
-button:hover{
+.btn, button:hover{
   padding: 5px;
 }
 

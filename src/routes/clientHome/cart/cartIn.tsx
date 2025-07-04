@@ -34,9 +34,17 @@ export default function Cart(){
                                     <div className="vsc-cart-item-description">
                                         <h3>{item.name}</h3>
                                         <div className="vsc-cart-item-quantity-container">
-                                            <div onClick={()=>{ handleDecrease(item.productId)}}  className="vsc-cart-item-quantity-btn">-</div>
+                                            <div onClick={()=>{ 
+                                                    handleDecrease(item.productId)
+                                                }}  
+                                                className="vsc-cart-item-quantity-btn"
+                                            >-</div>
                                             <p>{item.quantity}</p>
-                                            <div onClick={()=>{ handleIncrease(item.productId)}} className="vsc-cart-item-quantity-btn">+</div>
+                                            <div onClick={()=>{ 
+                                                    handleIncrease(item.productId)
+                                                }} 
+                                                className="vsc-cart-item-quantity-btn"
+                                            >+</div>
                                         </div>
                                     </div>
                                 </div>
@@ -55,15 +63,15 @@ export default function Cart(){
                     <h3>R$ {cartItems.total.toFixed(2)}</h3>
                 </div>
                 <div className="vsc-btn-page-container">
-                    <div className="vsc-btn vsc-btn-blue">
+                    <div className="btn vsc-btn vsc-btn-blue">
                         <h3>Finalizar pedido</h3>
                     </div>
                     <Link to="/catalog" >
-                        <div className="vsc-btn vsc-btn-white">
+                        <div className="btn vsc-btn vsc-btn-white">
                             <h3>Continuar comprando</h3>
                         </div>
                     </Link>
-                     <div onClick={clearClick} className="vsc-btn vsc-btn-blue">
+                     <div onClick={clearClick} className="btn vsc-btn vsc-btn-blue">
                         <h3>limpar</h3>
                     </div>
                 </div>

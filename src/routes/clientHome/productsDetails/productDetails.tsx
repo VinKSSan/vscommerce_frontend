@@ -68,7 +68,7 @@ export default function ProductsDetails(){
                                
                } 
                 <div className="vsc-btn-page-container">
-                    <div onClick={handleBuyClick}>
+                    <div onClick={handleBuyClick} className="btn">
                         <ButtonPrimary  contentBtn='comprar'/>
                     </div>
                     <Link to="/">
