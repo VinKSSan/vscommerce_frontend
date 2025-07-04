@@ -1,8 +1,29 @@
+import { useState } from "react";
 import "./searchBarSty.css"
 
-export default function SearchBar(){
+type Props={
+    onSearch:(term:string)=>void;
+}
+
+export default function SearchBar({onSearch}:Props){
+
+   const [searchTerm, setSearchTerm]  = useState("");
+
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>){
+        setSearchTerm(event? event.target.value: "") 
+    }
+
+    function handleSubmit(event: React.FormEvent){
+        event.preventDefault();
+        onSearch(searchTerm)
+    }
+
+    function handleReset(){
+        setSearchTerm("");
+        onSearch(searchTerm)
+    }
     return(
-        <form className="vsc-search-bar">
+        <form onSubmit={handleSubmit} className="vsc-search-bar">
             <button type="submit">
                 <svg xmlns="http://www.w3.org/2000/svg"
                     x="0px" y="0px" 
@@ -14,8 +35,13 @@ export default function SearchBar(){
                     </path>
                 </svg>
             </button>
-            <input type="text" placeholder="Nome do produto" />
-            <button type="reset">
+            <input 
+                type="text" 
+                placeholder="Nome do produto" 
+                value={searchTerm}
+                onChange={handleChange}    
+            />
+            <button onClick={handleReset}> 
                 <svg xmlns="http://www.w3.org/2000/svg" 
                     x="0px" y="0px"
                     width="100%" height="100%" 

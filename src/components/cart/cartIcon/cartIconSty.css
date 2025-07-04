@@ -1,0 +1,15 @@
+.vsc-cart-count{
+    position: relative;
+    top:-10px;
+    left: -2px;
+
+    background-color: var(--vsc-color-notification);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color:var(--vsc-color-bg-primary);
+    height: 16px;
+    width: 16px;
+    font-size: 8pt;
+}

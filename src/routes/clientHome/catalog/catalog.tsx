@@ -10,20 +10,41 @@ import type { ProductDTO } from '../../../models/product'
 
 export default function Catalog(){
 
+    const [isLastPage, setIsLastPage]= useState(false);
+
     const [products, setProducts] = useState<ProductDTO[]>([]);
 
+    const [queryParams, setQueryParams]= useState({
+        page:0,
+        name:"",
+        size:12,
+        sort:"name"
+    });
+
+    function handleLoad(){
+        setQueryParams({...queryParams,page: queryParams.page+1})
+    }
+
+
     useEffect(()=>{
-            productService.findAll(12)
+            productService.findPageRequest(queryParams.page,queryParams.name,queryParams.size,queryParams.sort)
             .then(res=>{
-                setProducts(res.data.content)
+                const nextPage = res.data.content;
+
+                setProducts(prev=>prev.concat(nextPage))
+
+                setIsLastPage(res.data.last)
             })
-    },[])
+    },[queryParams])
 
-
+    function handleSearch(searchText:string){
+        setProducts([])
+        setQueryParams({...queryParams, page:0, name:searchText})
+    }   
     return(
         <main>
             <section id="catalog-section" className="vsc-container">
-                <SearchBar/>
+                <SearchBar onSearch={handleSearch} />
                 <div className="vsc-catalog-cards vsc-mb20 vsc-mt20">
                     
                     {
@@ -33,7 +54,14 @@ export default function Catalog(){
                     }
                     
                 </div>
-                <LoadMoreBtn/>
+                {
+                    !isLastPage && (
+                        <div className='btn' onClick={handleLoad}>
+                            <LoadMoreBtn/>
+                        </div>
+                    )
+
+                }
             </section>
         </main>
     )

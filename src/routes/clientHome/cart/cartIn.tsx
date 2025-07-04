@@ -1,15 +1,18 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import './cartSty.css'
 import { clearCart, decreaseItem, getCart, increaseItem } from '../../../services/cartService'
 import type { OrderDTO } from '../../../models/order'
 import { Link } from 'react-router-dom'
+import { ContextCartCount } from '../../../utils/contextCount'
 
 export default function Cart(){
     const [cartItems, setItems] = useState<OrderDTO>(getCart)
 
+    const {setContextCartCount} = useContext(ContextCartCount);
+
     function clearClick(){
         clearCart();
-        setItems(getCart())
+        updateItems()
     }
 
     function handleIncrease(productId : number){
@@ -18,7 +21,13 @@ export default function Cart(){
     }
     function handleDecrease(productId : number){
        decreaseItem(productId)
-       setItems(getCart()) 
+       updateItems()
+    }
+
+    function updateItems(){
+       const newItems = getCart(); 
+       setItems(newItems)
+       setContextCartCount(newItems.items.length)
     }
     return(
         <main>

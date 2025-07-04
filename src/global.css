@@ -17,6 +17,8 @@
   --vsc-color-font-tertiary: #fff;
   --vsc-color-font-placeholder: #d9d9d9;
 
+  --vsc-color-notification: #f00;
+
   --vsc-color-error: #f33;
 }
 
@@ -179,10 +181,12 @@ nav a {
   cursor: pointer;
   transition: all ease .2s;
   padding: 2px;
+  box-sizing: border-box;
+  border: solid 1px transparent;
 }
 
-.btn, button:hover{
-  padding: 5px;
+.btn:hover, button:hover{
+  border-color: #0caf1d;
 }
 
 .vsc-btn-page-container {
