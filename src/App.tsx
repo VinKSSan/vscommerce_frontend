@@ -1,12 +1,14 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 
-import Catalog from "./routes/clientHome/catalog/catalog"
-import ProductsDetails from './routes/clientHome/productsDetails/productDetails'
-import ClientHome from "./routes/clientHome"
-import Cart from "./routes/clientHome/cart/cartIn"
+import Catalog from "./routes/client/catalog/catalog"
+import ProductsDetails from './routes/client/productsDetails/productDetails'
+import ClientHome from "./routes/client"
+import Cart from "./routes/client/cart/cartIn"
 import { useState } from "react"
 import { ContextCartCount } from "./utils/contextCount"
-import Login from "./routes/clientHome/login/loginIn"
+import Login from "./routes/client/login/loginIn"
+import Admin from "./routes/admin"
+import HomeAdmin from "./routes/admin/adminHome/homeIn"
 
 function App() {
   
@@ -23,6 +25,9 @@ function App() {
             <Route path="product-details/:productId"  element={<ProductsDetails/>}/> 
             <Route path="cart" element={<Cart/>}/>
             <Route path="login" element={<Login/>}/>
+          </Route>
+          <Route path="/admin" element={<Admin/>}>
+            <Route index element={<HomeAdmin/>} />
           </Route>
           <Route path="*" element={<Navigate to="/"/>}/>
         </Routes>

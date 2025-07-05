@@ -1,0 +1,8 @@
+#admin-home-section {
+  padding: 20px 0;
+}
+
+.vsc-header-admin {
+  background-color: var(--vsc-color-bg-quaternary);
+  color: var(--vsc-color-font-tertiary);
+}

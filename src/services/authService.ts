@@ -3,6 +3,9 @@ import type { CredentialsDTO } from "../models/auth";
 import { CLIENT_ID, CLIENT_SECRET } from "../utils/system";
 import type { AxiosRequestConfig } from "axios";
 import { requestBackend } from "../utils/request";
+import * as accessTokenStorage from "../storage/accessTokenStorage";
+
+
 
 export function loginRequest(loginData:CredentialsDTO){
     const headers ={
@@ -21,3 +24,17 @@ export function loginRequest(loginData:CredentialsDTO){
 
     return requestBackend(config)
 } 
+
+
+export function logout(){
+    accessTokenStorage.removeToken()
+}
+
+export function login(token:string){
+    accessTokenStorage.saveToken(token)
+}
+
+export function getAccessToken(){
+    accessTokenStorage.getToken()
+}
+

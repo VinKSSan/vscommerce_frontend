@@ -1,0 +1,4 @@
+.vsc-header-client {
+  background-color: var(--vsc-color-bg-secondary);
+  color: var(--vsc-color-font-primary);
+}
