@@ -1,5 +1,5 @@
 import QueryString from "qs";
-import type { CredentialsDTO, PayloadDto } from "../models/auth";
+import type { CredentialsDTO, PayloadDto, RoleEnum } from "../models/auth";
 import { CLIENT_ID, CLIENT_SECRET } from "../utils/system";
 import type { AxiosRequestConfig } from "axios";
 import { requestBackend } from "../utils/request";
@@ -57,4 +57,20 @@ export function getPayload():PayloadDto | undefined {
 export function isAuthenticated(): boolean {
     const tokenPayload = getPayload();
     return tokenPayload && tokenPayload.exp * 1000 > Date.now() ? true : false;
+}
+
+
+export function hasAnyRoles(roles: RoleEnum[]): boolean {
+    if (roles.length === 0) {
+        return true;
+    }
+    const tokenPayload = getPayload();
+    if (tokenPayload !== undefined) {
+        for (let i = 0; i < roles.length; i++) {
+            if (tokenPayload.authorities.includes(roles[i])) {
+            return true;
+        }}
+    //return roles.some(role => tokenData.authorities.includes(role));
+    }
+    return false;
 }
