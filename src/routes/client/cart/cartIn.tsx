@@ -4,6 +4,8 @@ import { clearCart, decreaseItem, getCart, increaseItem } from '../../../service
 import type { OrderDTO } from '../../../models/order'
 import { Link } from 'react-router-dom'
 import { ContextCartCount } from '../../../utils/contextCount'
+import { placeOrder } from '../../../services/orderService'
+import { navigateTo } from '../../../services/navigationService'
 
 export default function Cart(){
     const [cartItems, setItems] = useState<OrderDTO>(getCart)
@@ -28,6 +30,20 @@ export default function Cart(){
        const newItems = getCart(); 
        setItems(newItems)
        setContextCartCount(newItems.items.length)
+    }
+
+    function handlerPlaceOrder(){
+        placeOrder(cartItems).then(
+            res=>{
+                clearCart();
+                setContextCartCount(0);
+                navigateTo(`/confirmation/${res.data.id}`)
+            }
+        )
+    }
+
+    function confirmacao(){
+        navigateTo(`/confirmation/4`)
     }
     return(
         <main>
@@ -63,7 +79,7 @@ export default function Cart(){
                     </div>
                 ) : (
                     <div>
-                       <h2> Carrinho Vazio</h2>
+                       <h2> Carrinho Vazio</h2> <button onClick={confirmacao}>confirma last ped</button>
                     </div>
                 )    
                 }
@@ -72,7 +88,7 @@ export default function Cart(){
                     <h3>R$ {cartItems.total.toFixed(2)}</h3>
                 </div>
                 <div className="vsc-btn-page-container">
-                    <div className="btn vsc-btn vsc-btn-blue">
+                    <div onClick={handlerPlaceOrder} className="btn vsc-btn vsc-btn-blue">
                         <h3>Finalizar pedido</h3>
                     </div>
                     <Link to="/catalog" >

@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
 import { hasAnyRoles, isAuthenticated } from "../../services/authService";
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 import type { RoleEnum } from "../../models/auth";
 
 type Props = {
-    children: JSX.Element;
+    children: ReactNode;
     roles?: RoleEnum[];
 }
 export function Privating({ children, roles = [] }: Props) {
