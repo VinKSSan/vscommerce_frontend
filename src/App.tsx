@@ -17,6 +17,8 @@ import { ContextToken } from "./utils/contextToken"
 import type { PayloadDto } from "./models/auth"
 import { getCart } from "./services/cartService"
 import Confirmation from "./routes/confirmation/confirmation"
+import ProductListing from "./routes/admin/productListi/productList"
+import ProductForm from "./routes/admin/productForm/productForm"
 
 
 function App() {
@@ -54,12 +56,15 @@ function App() {
               
               <Route path="confirmation/:orderId"  element={<Privating> <Confirmation/></Privating>}/>
             </Route>
-            <Route path="/admin" element={
+            <Route path="admin" element={
               <Privating roles={['ROLE_ADMIN']}>
                 <Admin/>
               </Privating>
             }>
-              <Route index element={<HomeAdmin/>} />
+              <Route index  element={<Navigate to='home' />} />
+              <Route path="home"  element={<HomeAdmin/>} />
+              <Route path="products" element={<ProductListing/>} />
+              <Route path="products/:productId" element={<ProductForm/>} />
             </Route>
             <Route path="*" element={<Navigate to="/"/>}/>
           </Routes>
