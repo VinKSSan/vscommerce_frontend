@@ -10,6 +10,7 @@ import Login from "./routes/client/login/loginIn"
 import Admin from "./routes/admin"
 import HomeAdmin from "./routes/admin/adminHome/homeAdm"
 import { setNavigate } from "./services/navigationService"
+import { Privating } from "./components/privating/privating"
 
 
 function App() {
@@ -34,7 +35,11 @@ function App() {
             <Route path="cart" element={<Cart/>}/>
             <Route path="login" element={<Login/>}/>
           </Route>
-          <Route path="/admin" element={<Admin/>}>
+          <Route path="/admin" element={
+            <Privating>
+              <Admin/>
+            </Privating>
+          }>
             <Route index element={<HomeAdmin/>} />
           </Route>
           <Route path="*" element={<Navigate to="/"/>}/>
