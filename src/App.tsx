@@ -16,6 +16,7 @@ import * as authService from "./services/authService"
 import { ContextToken } from "./utils/contextToken"
 import type { PayloadDto } from "./models/auth"
 import { getCart } from "./services/cartService"
+import Confirmation from "./routes/confirmation/confirmation"
 
 
 function App() {
@@ -49,6 +50,8 @@ function App() {
               <Route path="product-details/:productId"  element={<ProductsDetails/>}/> 
               <Route path="cart" element={<Cart/>}/>
               <Route path="login" element={<Login/>}/>
+
+              <Route path="confirmation/:orderId"  element={<Confirmation/>}/>
             </Route>
             <Route path="/admin" element={
               <Privating roles={['ROLE_ADMIN']}>
