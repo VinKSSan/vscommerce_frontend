@@ -36,7 +36,7 @@ function App() {
             <Route path="login" element={<Login/>}/>
           </Route>
           <Route path="/admin" element={
-            <Privating>
+            <Privating roles={['ROLE_ADMIN']}>
               <Admin/>
             </Privating>
           }>
