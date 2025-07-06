@@ -1,9 +1,10 @@
 import QueryString from "qs";
-import type { CredentialsDTO } from "../models/auth";
+import type { CredentialsDTO, PayloadDto } from "../models/auth";
 import { CLIENT_ID, CLIENT_SECRET } from "../utils/system";
 import type { AxiosRequestConfig } from "axios";
 import { requestBackend } from "../utils/request";
 import * as accessTokenStorage from "../storage/accessTokenStorage";
+import { jwtDecode } from "jwt-decode";
 
 
 
@@ -38,3 +39,22 @@ export function getAccessToken(){
    return accessTokenStorage.getToken()
 }
 
+export function getPayload():PayloadDto | undefined {
+    try{
+        const token = accessTokenStorage.getToken();
+        return (
+            token == null
+            ? undefined
+            : ( jwtDecode(token) as PayloadDto )
+        ) 
+    }
+    catch(error){
+        console.error(error)
+        return undefined
+    }
+}
+
+export function isAuthenticated(): boolean {
+    const tokenPayload = getPayload();
+    return tokenPayload && tokenPayload.exp * 1000 > Date.now() ? true : false;
+}

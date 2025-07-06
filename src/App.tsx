@@ -1,22 +1,30 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom"
 
 import Catalog from "./routes/client/catalog/catalog"
 import ProductsDetails from './routes/client/productsDetails/productDetails'
 import ClientHome from "./routes/client"
 import Cart from "./routes/client/cart/cartIn"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ContextCartCount } from "./utils/contextCount"
 import Login from "./routes/client/login/loginIn"
 import Admin from "./routes/admin"
 import HomeAdmin from "./routes/admin/adminHome/homeAdm"
+import { setNavigate } from "./services/navigationService"
+
 
 function App() {
   
   const [contextCartCount, setContextCartCount] = useState<number>(0)
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setNavigate(navigate);
+  }, [navigate]);
+
   return (
     <ContextCartCount.Provider value={{contextCartCount, setContextCartCount}}>
-      <BrowserRouter>
+      
         <Routes>
           <Route path="/" element={<ClientHome/>}>
 
@@ -31,7 +39,6 @@ function App() {
           </Route>
           <Route path="*" element={<Navigate to="/"/>}/>
         </Routes>
-      </BrowserRouter>
     </ContextCartCount.Provider>
   )
 }
