@@ -1,5 +1,6 @@
 import homeIcon from "../../assets/icons/home.svg"
 import productsIcon from "../../assets/icons/products.svg"
+import LoggedUser from "../loggedUser/logged";
 
 
 export default function HeaderAdmin(){
@@ -18,10 +19,7 @@ export default function HeaderAdmin(){
                     <p className="vsc-menu-item-active">Produtos</p>
                     </div>
                 </div>
-                <div className="vsc-logged-user">
-                    <p>Maria Silva</p>
-                    <a href="#">Sair</a>
-                </div>
+                    <LoggedUser/>
                 </div>
             </nav>
             </header>

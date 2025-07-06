@@ -6,6 +6,7 @@ import amdIcon from '../../assets/icons/admin.svg'
 import { hasAnyRoles } from "../../services/authService";
 import { useContext } from "react";
 import { ContextToken } from "../../utils/contextToken";
+import LoggedUser from "../loggedUser/logged";
 
 export default function HeaderClient(){
 
@@ -17,21 +18,21 @@ export default function HeaderClient(){
                     <h1>VSCommerce</h1>
                 </Link>
                 <div className="vsc-navbar-right">
-                <div className="vsc-menu-items-container">
-                    <div className="vsc-menu-item">
-                        <CartIcon/>
-                    </div>
-                    {
-                    contextTokenPayload &&
-                    hasAnyRoles(['ROLE_ADMIN']) &&
-                    <Link to="/admin">
+                    <div className="vsc-menu-items-container">
                         <div className="vsc-menu-item">
-                            <img src={amdIcon} alt="Admin" />
+                            <CartIcon/>
                         </div>
-                    </Link>
-                    }
-                </div>
-                <Link to="/login">Entrar</Link>
+                        {
+                        contextTokenPayload &&
+                        hasAnyRoles(['ROLE_ADMIN']) &&
+                        <Link to="/admin">
+                            <div className="vsc-menu-item">
+                                <img src={amdIcon} alt="Admin" />
+                            </div>
+                        </Link>
+                        }
+                    </div>
+                    <LoggedUser/>
                 </div>
             </nav>
         </header>
