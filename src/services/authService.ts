@@ -35,6 +35,6 @@ export function login(token:string){
 }
 
 export function getAccessToken(){
-    accessTokenStorage.getToken()
+   return accessTokenStorage.getToken()
 }
 

@@ -27,11 +27,19 @@ export default function Catalog(){
 
 
     useEffect(()=>{
-            productService.findPageRequest(queryParams.page,queryParams.name,queryParams.size,queryParams.sort)
-            .then(res=>{
+            productService.findPageRequest(
+                queryParams.page,
+                queryParams.name,
+                queryParams.size,
+                queryParams.sort
+            ).then(res=>{
                 const nextPage = res.data.content;
-
-                setProducts(prev=>prev.concat(nextPage))
+                setProducts(prev => {
+                    const filtered = nextPage.filter((item: ProductDTO) =>
+                        !prev.some(p => p.id === item.id)
+                    );
+                    return [...prev, ...filtered];
+                });
 
                 setIsLastPage(res.data.last)
             })
@@ -40,14 +48,14 @@ export default function Catalog(){
     function handleSearch(searchText:string){
         setProducts([])
         setQueryParams({...queryParams, page:0, name:searchText})
-    }   
+    }  
     return(
         <main>
             <section id="catalog-section" className="vsc-container">
                 <SearchBar onSearch={handleSearch} />
                 <div className="vsc-catalog-cards vsc-mb20 vsc-mt20">
                     
-                    {
+                    { 
                         products.map(
                             product => <CatalogCard key={product.id} product={product}/>
                         )

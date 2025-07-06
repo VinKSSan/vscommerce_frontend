@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './loginSty.css'
 import type { CredentialsDTO } from '../../../models/auth';
 import { loginRequest } from '../../../services/authService';
+import { saveToken } from '../../../storage/accessTokenStorage';
 
 export default function Login(){
 
@@ -14,6 +15,7 @@ export default function Login(){
         e.preventDefault();
         loginRequest(formData)
             .then(res=>{
+                saveToken(res.data.access_token)
                 console.log(res.data)
             })
             .catch(err=>{

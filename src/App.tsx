@@ -8,7 +8,7 @@ import { useState } from "react"
 import { ContextCartCount } from "./utils/contextCount"
 import Login from "./routes/client/login/loginIn"
 import Admin from "./routes/admin"
-import HomeAdmin from "./routes/admin/adminHome/homeIn"
+import HomeAdmin from "./routes/admin/adminHome/homeAdm"
 
 function App() {
   
