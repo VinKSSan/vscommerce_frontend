@@ -1,11 +1,16 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import './loginSty.css'
 import type { CredentialsDTO } from '../../../models/auth';
-import { loginRequest } from '../../../services/authService';
-import { saveToken } from '../../../storage/accessTokenStorage';
+import * as authService from '../../../services/authService';
+import { useNavigate } from 'react-router-dom';
+import { ContextToken } from '../../../utils/contextToken';
+import { clearCart } from '../../../services/cartService';
 
 export default function Login(){
 
+    const {setContextTokenPayload}= useContext(ContextToken)
+
+    const navigate  =useNavigate();
     const [formData, setFormData] = useState<CredentialsDTO>({
         username:'',
         password:''
@@ -13,10 +18,12 @@ export default function Login(){
 
     function handleSubmit(e:React.FormEvent){
         e.preventDefault();
-        loginRequest(formData)
+        authService.loginRequest(formData)
             .then(res=>{
-                saveToken(res.data.access_token)
-                console.log(res.data)
+                authService.login(res.data.access_token)
+                setContextTokenPayload(authService.getPayload())
+                clearCart()
+                navigate("/cart")
             })
             .catch(err=>{
                 console.error("pal...",err)
