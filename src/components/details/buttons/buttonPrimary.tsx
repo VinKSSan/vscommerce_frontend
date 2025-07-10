@@ -7,7 +7,7 @@ type Props = {
 
 export default function ButtonPrimary({contentBtn}:Props){
         return(
-            <div className="vsc-btn vsc-btn-blue">
+            <div className="btn vsc-btn vsc-btn-blue">
                 {contentBtn}
             </div>
         );

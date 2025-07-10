@@ -4,9 +4,17 @@ import './productSty.css'
 import { useEffect, useState } from "react";
 import { findPageRequest } from "../../../services/productServices";
 import type { ProductDTO } from "../../../models/product";
+import SearchBar from "../../../components/catalog/searchBar/searchBar";
+import LoadMoreBtn from "../../../components/catalog/loadMoreBtn/loadMoreBtn";
+import DialogInfo from "../../../components/dialog/dialog";
 
 
 export default function  ProductListing(){
+
+    const [dialogData, setDialogData] = useState({
+        visible: true,
+        message: "SUCCESS OPERATION!"
+    })
 
     const [isLastPage, setIsLastPage]= useState(false);
 
@@ -38,6 +46,23 @@ export default function  ProductListing(){
             })
         },[queryParams])
 
+         function handleSearch(searchText:string){
+            setProducts([])
+            setQueryParams({...queryParams, page:0, name:searchText})
+        }  
+
+        function handleLoad(){
+            setQueryParams({...queryParams,page: queryParams.page+1})
+        }
+
+        function handleOpen(){
+            setDialogData(prev=>({...prev, visible:true}))
+        }
+
+        function handleClose(){
+            setDialogData(prev=>({...prev, visible:false}))
+        }
+
     return(
         <main>
             <section id="product-listing-section" className="vsc-container">
@@ -47,11 +72,7 @@ export default function  ProductListing(){
                     <div className="vsc-btn vsc-btn-white">Novo</div>
                 </div>
 
-                <form className="vsc-search-bar">
-                    <button type="submit">🔎︎</button>
-                    <input type="text" placeholder="Nome do produto" />
-                    <button type="reset">🗙</button>
-                </form>
+               <SearchBar onSearch={handleSearch}/>
 
                 <table className="vsc-table vsc-mb20 vsc-mt20">
                     <thead>
@@ -67,21 +88,31 @@ export default function  ProductListing(){
                     <tbody>
                         {
                             products.map(p=>(
-                                <tr>
+                                <tr key={p.id}>
                                     <td className="vsc-tb576">{p.id}</td>
                                     <td><img className="vsc-product-listing-image" src={p.imgUrl} alt="Computer"/></td>
                                     <td className="vsc-tb768">R$ {p.price}</td>
                                     <td className="vsc-txt-left">{p.name}</td>
                                     <td><img className="vsc-product-listing-btn" src={editIcon} alt="Editar"/></td>
-                                    <td><img className="vsc-product-listing-btn" src={deleteIcon} alt="Deletar"/></td>
+                                    <td ><img className="vsc-product-listing-btn" onClick={handleOpen} src={deleteIcon} alt="Deletar"/></td>
                                 </tr>
                             ))
                         }
                     </tbody>
                 </table>
+                 {
+                    !isLastPage && (
+                        <div className='btn' onClick={handleLoad}>
+                            <LoadMoreBtn/>
+                        </div>
+                    )
 
-                <div className="vsc-btn-next-page">Carregar mais</div>
+                }
             </section>
+            {
+                dialogData.visible && 
+                <DialogInfo message={dialogData.message} onDialogClose={handleClose}/>
+            }
         </main>
     );
 }
