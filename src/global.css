@@ -377,9 +377,15 @@ nav a {
 
 /*-----------------------------------------------------------------*/
 /* dialog styles */
+.dialog-btn-box {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap:20px
+
+}
 .dialog-btn {
   width: 100%;
-
 }
 .vsc-dialog-background {
   position: fixed;

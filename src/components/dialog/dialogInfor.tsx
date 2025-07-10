@@ -5,7 +5,7 @@ type Props = {
     onDialogClose: ()=>void;
 }
 
-export default function DialogInfo({message, onDialogClose} : Props){
+export default function DialogInformation({message, onDialogClose} : Props){
     return(
         <div  className="vsc-dialog-background"  onClick={()=>onDialogClose()}>
             <div className="vsc-dialog-box" onClick={e=>e.stopPropagation()}>
