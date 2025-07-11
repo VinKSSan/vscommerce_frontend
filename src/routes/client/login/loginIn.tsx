@@ -69,7 +69,7 @@ export default function Login(){
                                     onChange={handleInputChange}
                                     className="vsc-form-control" 
                                     {...formData.username} 
-                                    />
+                                />
                                 <div className="vsc-form-error"></div>
                             </div>
                             <div>

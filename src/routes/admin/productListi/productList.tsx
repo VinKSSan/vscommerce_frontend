@@ -8,6 +8,8 @@ import SearchBar from "../../../components/catalog/searchBar/searchBar";
 import LoadMoreBtn from "../../../components/catalog/loadMoreBtn/loadMoreBtn";
 import DialogInformation from "../../../components/dialog/dialogInfor";
 import DialogConfirmation from "../../../components/dialog/dialogConfirm";
+import { navigateTo } from "../../../services/navigationService";
+import ButtonInverse from "../../../components/details/buttons/buttonInverse";
 
 
 export default function  ProductListing(){
@@ -92,13 +94,17 @@ export default function  ProductListing(){
             console.log(answer, pId)
         }
 
+        function handleCreate(){
+            navigateTo("/admin/products/create")
+        }
+
     return(
         <main>
             <section id="product-listing-section" className="vsc-container">
                 <h2 className="vsc-section-title vsc-mb20">Cadastro de produtos</h2>
 
-                <div className="vsc-btn-page-container vsc-mb20">
-                    <div className="vsc-btn vsc-btn-white">Novo</div>
+                <div onClick={handleCreate} className="vsc-btn-page-container vsc-mb20">
+                    <ButtonInverse contentBtn="Novo"/>
                 </div>
 
                <SearchBar onSearch={handleSearch}/>

@@ -1,6 +1,61 @@
+import { Link, useParams } from 'react-router-dom';
 import './formSty.css'
+import FormInput from '../../../components/formInput/formInput';
+import { update, updateAll } from '../../../utils/forms';
+import { useEffect, useState } from 'react';
+import { findById } from '../../../services/productServices';
 
 export default function  ProductForm(){
+
+    const params = useParams();
+
+    const isEditing= params.productId !== 'create'
+
+
+    const [formData, setFormData] = useState({
+           
+            name: {
+                value: "",
+                id: "name",
+                name: "name",
+                type: "text",
+                placeholder: "nome",
+            },
+            price: {
+                value: 0,
+                id: "price",
+                name: "price",
+                type: "number",
+                placeholder: "preço",
+                validation:(value:number)=>{
+                    return value>0
+                },
+                invalid:false
+            },
+            imgUrl: {
+                value: "",
+                id: "imgUrl",
+                name: "imgUrl",
+                type: "text",
+                placeholder: "imagem",
+            },
+        })
+
+        useEffect(()=>{
+            if(isEditing){
+                findById(Number(params.productId))
+                    .then(res=>{
+                        const newFormData = updateAll(formData, res.data)
+                        setFormData(newFormData)
+                    })
+            }
+        },[])
+        function handleInputChange(e:React.ChangeEvent<HTMLInputElement>){
+            const value = e.target.value;
+            const name = e.target.name
+            setFormData(prev=>update(prev,name,value))
+        }
+
     return(
         <main>
             <section id="product-form-section" className="vsc-container">
@@ -9,13 +64,25 @@ export default function  ProductForm(){
                     <h2>Dados do produto</h2>
                     <div className="vsc-form-controls-container">
                     <div>
-                        <input className="vsc-form-control" type="text" placeholder="Nome"/>
+                        <FormInput
+                            onChange={handleInputChange}
+                            className="vsc-form-control" 
+                            {...formData.name} 
+                        />
                     </div>
                     <div>
-                        <input className="vsc-form-control" type="text" placeholder="Preço"/>
+                        <FormInput
+                            onChange={handleInputChange}
+                            className="vsc-form-control" 
+                            {...formData.price} 
+                        />
                     </div>
                     <div>
-                        <input className="vsc-form-control" type="text" placeholder="Imagem"/>
+                        <FormInput
+                            onChange={handleInputChange}
+                            className="vsc-form-control" 
+                            {...formData.imgUrl} 
+                        />
                     </div>
                     <div>
                         <select className="vsc-form-control dsc-select" required>
@@ -30,8 +97,10 @@ export default function  ProductForm(){
                     </div>
 
                     <div className="vsc-product-form-buttons">
-                    <button type="reset" className="vsc-btn dsc-btn-white">Cancelar</button>
-                    <button type="submit" className="vsc-btn dsc-btn-blue">Salvar</button>
+                        <Link to="/admin/products">
+                            <button type="reset" className="vsc-btn dsc-btn-white">Cancelar</button>    
+                        </Link>
+                        <button type="submit" className="vsc-btn dsc-btn-blue">Salvar</button>
                     </div>
                 </form>
                 </div>

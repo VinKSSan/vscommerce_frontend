@@ -3,6 +3,10 @@
   padding: 20px 0;
 }
 
+.vsc-btn-page-container{
+  cursor: pointer;
+}
+
 
 .vsc-product-listing-image {
   width: 69px;
