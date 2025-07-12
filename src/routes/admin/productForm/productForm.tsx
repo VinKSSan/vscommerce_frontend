@@ -1,9 +1,10 @@
 import { Link, useParams } from 'react-router-dom';
 import './formSty.css'
-import FormInput from '../../../components/formInput/formInput';
+import FormInput from '../../../components/forms/formInput';
 import { toDirty, update, updateAll, validate } from '../../../utils/forms';
 import { useEffect, useState } from 'react';
 import { findById } from '../../../services/productServices';
+import FormTextArea from '../../../components/forms/formText';
 
 export default function  ProductForm(){
 
@@ -20,6 +21,10 @@ export default function  ProductForm(){
                 name: "name",
                 type: "text",
                 placeholder: "nome",
+                 validation:(value:string)=>{
+                    return /^.{3,30}$/.test(value);
+                },
+                message:"minimo 3 e maximo 30 caracters"
             },
             price: {
                 value: 0,
@@ -39,6 +44,18 @@ export default function  ProductForm(){
                 type: "text",
                 placeholder: "imagem",
             },
+
+            description:{
+                value: "",
+                id: "description",
+                name: "description",
+                type: "text",
+                placeholder: "descrição",
+                 validation:(value:string)=>{
+                    return /^.{10,1000}$/.test(value);
+                },
+                message:"minimo 10 e maximo 1000 caracters"
+            }
         })
 
         useEffect(()=>{
@@ -69,51 +86,60 @@ export default function  ProductForm(){
         <main>
             <section id="product-form-section" className="vsc-container">
                 <div className="vsc-product-form-container">
-                <form className="vsc-card dsc-form">
+                <form className="vsc-card vsc-form">
                     <h2>Dados do produto</h2>
                     <div className="vsc-form-controls-container">
+                        <div>
+                            <FormInput
+                                onChange={handleInputChange}
+                                className="vsc-form-control"
+                                onTurnDirty={handleTurnDirty} 
+                                {...formData.name} 
+                            />
+                            <div className='vsc-form-error' >{formData.name.message}</div>
+                        </div>
+                        <div>
+                            <FormInput
+                                onChange={handleInputChange}
+                                className="vsc-form-control" 
+                                {...formData.price} 
+                                onTurnDirty={handleTurnDirty}
+                            />
+                            <div className='vsc-form-error' >{formData.price.message}</div>
+                        </div>
+                        <div>
+                            <FormInput
+                                onChange={handleInputChange}
+                                className="vsc-form-control" 
+                                onTurnDirty={handleTurnDirty}
+                                {...formData.imgUrl} 
+                            />
+                        </div>
                     <div>
-                        <FormInput
-                            onChange={handleInputChange}
-                            className="vsc-form-control"
-                            onTurnDirty={handleTurnDirty} 
-                            {...formData.name} 
-                        />
-                    </div>
-                    <div>
-                        <FormInput
-                            onChange={handleInputChange}
-                            className="vsc-form-control" 
-                            {...formData.price} 
-                            onTurnDirty={handleTurnDirty}
-                        />
-                        <div className='vsc-form-error' >{formData.price.message}</div>
-                    </div>
-                    <div>
-                        <FormInput
-                            onChange={handleInputChange}
-                            className="vsc-form-control" 
-                            onTurnDirty={handleTurnDirty}
-                            {...formData.imgUrl} 
-                        />
-                    </div>
-                    <div>
-                        <select className="vsc-form-control dsc-select" required>
+                        <select className="vsc-form-control vsc-select" required>
                         <option value="" disabled selected>Categorias</option>
                         <option value="1">Valor 1</option>
                         <option value="2">Valor 2</option>
                         </select>
                     </div>
                     <div>
-                        <textarea className="vsc-form-control dsc-textarea" placeholder="Descrição"></textarea>
+                        <div>
+                            <FormTextArea
+                                onChange={handleInputChange}
+                                className="vsc-form-control vsc-textarea"
+                                onTurnDirty={handleTurnDirty} 
+                                {...formData.description} 
+                            />
+                            <div className='vsc-form-error' >{formData.description.message}</div>
+                        </div>
                     </div>
                     </div>
 
                     <div className="vsc-product-form-buttons">
                         <Link to="/admin/products">
-                            <button type="reset" className="vsc-btn dsc-btn-white">Cancelar</button>    
+                            <button type="reset" className="vsc-btn vsc-btn-white">Cancelar</button>    
                         </Link>
-                        <button type="submit" className="vsc-btn dsc-btn-blue">Salvar</button>
+                        <button type="submit" className="vsc-btn vsc-btn-blue">Salvar</button>
                     </div>
                 </form>
                 </div>

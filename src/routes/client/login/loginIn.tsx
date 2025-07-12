@@ -4,7 +4,7 @@ import * as authService from '../../../services/authService';
 import { useNavigate } from 'react-router-dom';
 import { ContextToken } from '../../../utils/contextToken';
 import { clearCart } from '../../../services/cartService';
-import FormInput from '../../../components/formInput/formInput';
+import FormInput from '../../../components/forms/formInput';
 import * as forms from '../../../utils/forms';
 
 
@@ -22,7 +22,7 @@ export default function Login(){
             type: "text",
             placeholder: "Email",
             validation: function (value: string) {
-                return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
                     .test(value.toLowerCase())
                 ;
             },
@@ -34,6 +34,12 @@ export default function Login(){
             name: "password",
             type: "password",
             placeholder: "Senha",
+            validation: function (value: string) {
+                return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+                    .test(value.toLowerCase())
+                ;
+            },
+            message: "ao menos 8 caracteres, uma letra, um numero e um caracter especial"
         }
     })
 
@@ -80,7 +86,6 @@ export default function Login(){
                                     {...formData.username} 
                                 />
                                 <div className='vsc-form-error' >{formData.username.message}</div>
-                                <div className="vsc-form-error"></div>
                             </div>
                             <div>
                                 <FormInput
@@ -89,6 +94,7 @@ export default function Login(){
                                     className="vsc-form-control" 
                                     {...formData.password}
                                 />
+                                <div className='vsc-form-error' >{formData.password.message}</div>
                             </div>
                         </div>
 
