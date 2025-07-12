@@ -5,6 +5,10 @@ import { toDirty, update, updateAll, validate } from '../../../utils/forms';
 import { useEffect, useState } from 'react';
 import { findById } from '../../../services/productServices';
 import FormTextArea from '../../../components/forms/formText';
+import type { CategoryDTO } from '../../../models/category';
+import { findCategorys } from '../../../services/categoryServices';
+
+import FormSelect from '../../../components/forms/formSelect';
 
 export default function  ProductForm(){
 
@@ -12,6 +16,7 @@ export default function  ProductForm(){
 
     const isEditing= params.productId !== 'create'
 
+    const [categories, setCategories] = useState<CategoryDTO[]>([])
 
     const [formData, setFormData] = useState({
            
@@ -21,7 +26,7 @@ export default function  ProductForm(){
                 name: "name",
                 type: "text",
                 placeholder: "nome",
-                 validation:(value:string)=>{
+                validation:(value:string)=>{
                     return /^.{3,30}$/.test(value);
                 },
                 message:"minimo 3 e maximo 30 caracters"
@@ -55,8 +60,24 @@ export default function  ProductForm(){
                     return /^.{10,1000}$/.test(value);
                 },
                 message:"minimo 10 e maximo 1000 caracters"
+            },
+            categories:{
+                value:[],
+                id:"categories",
+                name:"categories",
+                placeholder:"Categorias",
+                validation: function(value: CategoryDTO[]){
+                    return value.length>0
+                },
+                message:"escolha pelo menos uma categoria"
             }
         })
+
+        useEffect(()=>{
+            findCategorys().then(res=>{
+                setCategories(res.data)
+            });
+        },[])
 
         useEffect(()=>{
             if(isEditing){
@@ -115,24 +136,36 @@ export default function  ProductForm(){
                                 {...formData.imgUrl} 
                             />
                         </div>
-                    <div>
-                        <select className="vsc-form-control vsc-select" required>
-                        <option value="" disabled selected>Categorias</option>
-                        <option value="1">Valor 1</option>
-                        <option value="2">Valor 2</option>
-                        </select>
-                    </div>
-                    <div>
                         <div>
-                            <FormTextArea
-                                onChange={handleInputChange}
-                                className="vsc-form-control vsc-textarea"
-                                onTurnDirty={handleTurnDirty} 
-                                {...formData.description} 
+                            <FormSelect
+                                className="vsc-form-control vsc-select" 
+                                
+                                onChange={((obj:any)=>setFormData((prev)=>{
+                                    const up = update(prev,"categories",obj)
+                                    return validate(up, "categories");
+                                }))}
+                                onTurnDirty={handleTurnDirty}
+                                
+                                {...formData.categories}
+                                
+                                options={categories}
+                                isMulti
+                                getOptionLabel={(obj:any)=>obj.name}
+                                getOptionValue={(obj:any)=>String(obj.id)}
                             />
-                            <div className='vsc-form-error' >{formData.description.message}</div>
+                            <div className='vsc-form-error' >{formData.categories.message}</div>
                         </div>
-                    </div>
+                        <div>
+                            <div>
+                                <FormTextArea
+                                    onChange={handleInputChange}
+                                    className="vsc-form-control vsc-textarea"
+                                    onTurnDirty={handleTurnDirty} 
+                                    {...formData.description} 
+                                />
+                                <div className='vsc-form-error' >{formData.description.message}</div>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="vsc-product-form-buttons">
