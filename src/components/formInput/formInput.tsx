@@ -1,6 +1,23 @@
 export default function FormInput(props: any){
-    const {validation, ...inputProps } = props;
+    const {
+        validation, 
+        dirty="false", 
+        invalid="false", 
+        onTurnDirty, 
+        ...inputProps 
+    } = props;
+
+    function handleBlur(){
+        onTurnDirty(props.name)
+    }
+
     return (
-        <input {...inputProps} />
+        <input
+            data-dirty={dirty} 
+            data-invalid={invalid} 
+            onBlur={handleBlur} 
+            onFocus={handleBlur}
+            {...inputProps} 
+        />
     );
 }

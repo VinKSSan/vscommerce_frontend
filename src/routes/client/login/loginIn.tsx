@@ -54,7 +54,15 @@ export default function Login(){
     function handleInputChange(e:React.ChangeEvent<HTMLInputElement>){
         const value = e.target.value;
         const name = e.target.name
-        setFormData(prev=>forms.update(prev,name,value))
+        setFormData(prev=>{
+            const up = forms.update(prev,name,value);
+            const valid = forms.validate(up, name);
+            return valid
+        })
+    }
+
+    function handleTurnDirty(name: string){
+        setFormData(prev=>(forms.toDirty(prev, name)))
     }
 
     return(
@@ -66,15 +74,18 @@ export default function Login(){
                         <div className="vsc-form-controls-container">
                             <div>
                                 <FormInput 
+                                    onTurnDirty={handleTurnDirty}
                                     onChange={handleInputChange}
                                     className="vsc-form-control" 
                                     {...formData.username} 
                                 />
+                                <div className='vsc-form-error' >{formData.username.message}</div>
                                 <div className="vsc-form-error"></div>
                             </div>
                             <div>
                                 <FormInput
                                     onChange={handleInputChange}
+                                    onTurnDirty={handleTurnDirty}
                                     className="vsc-form-control" 
                                     {...formData.password}
                                 />

@@ -23,5 +23,15 @@ export function validate(inputs: any, name: string){
         return inputs;
    }
     const isInvalid = !inputs[name].validation(inputs[name].value)
-    return {...inputs,[name]:{...inputs[name], invalid: isInvalid.toString}}
+    console.log(isInvalid.toString())
+    return {...inputs,[name]:{...inputs[name], invalid: isInvalid.toString()}}
+}
+
+export function toDirty(inputs:any, name:string){
+    
+    const dirtyVar = inputs[name].dirty
+    const ndVar = dirtyVar !== undefined? !(dirtyVar==="true"): false;
+    console.log(ndVar, ndVar.toString())
+
+    return {...inputs, [name]:{...inputs[name], dirty:ndVar.toString()}}
 }

@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import './formSty.css'
 import FormInput from '../../../components/formInput/formInput';
-import { update, updateAll } from '../../../utils/forms';
+import { toDirty, update, updateAll, validate } from '../../../utils/forms';
 import { useEffect, useState } from 'react';
 import { findById } from '../../../services/productServices';
 
@@ -30,7 +30,7 @@ export default function  ProductForm(){
                 validation:(value:number)=>{
                     return value>0
                 },
-                invalid:false
+                message:"number error"
             },
             imgUrl: {
                 value: "",
@@ -53,7 +53,16 @@ export default function  ProductForm(){
         function handleInputChange(e:React.ChangeEvent<HTMLInputElement>){
             const value = e.target.value;
             const name = e.target.name
-            setFormData(prev=>update(prev,name,value))
+            setFormData(prev=>{
+                const up = update(prev,name,value);
+                const valid = validate(up, name);
+                return valid
+            })
+        }
+
+        function handleTurnDirty(name: string){
+            console.log("detro--fora",formData[name])
+            setFormData(prev=>(toDirty(prev, name)))
         }
 
     return(
@@ -66,7 +75,8 @@ export default function  ProductForm(){
                     <div>
                         <FormInput
                             onChange={handleInputChange}
-                            className="vsc-form-control" 
+                            className="vsc-form-control"
+                            onTurnDirty={handleTurnDirty} 
                             {...formData.name} 
                         />
                     </div>
@@ -75,12 +85,15 @@ export default function  ProductForm(){
                             onChange={handleInputChange}
                             className="vsc-form-control" 
                             {...formData.price} 
+                            onTurnDirty={handleTurnDirty}
                         />
+                        <div className='vsc-form-error' >{formData.price.message}</div>
                     </div>
                     <div>
                         <FormInput
                             onChange={handleInputChange}
                             className="vsc-form-control" 
+                            onTurnDirty={handleTurnDirty}
                             {...formData.imgUrl} 
                         />
                     </div>
