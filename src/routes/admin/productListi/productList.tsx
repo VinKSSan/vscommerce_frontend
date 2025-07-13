@@ -72,6 +72,10 @@ export default function  ProductListing(){
             setDialogConfirm(prev=>({...prev, id:id, visible:true}))
         }
 
+        function handleEdit(pId:number){
+            navigateTo(`/admin/products/${pId}`)
+        }
+
         function handleConfirmation(answer: boolean, pId: number){
             if(answer) {
                 deleteById(pId)
@@ -128,7 +132,7 @@ export default function  ProductListing(){
                                     <td><img className="vsc-product-listing-image" src={p.imgUrl} alt="Computer"/></td>
                                     <td className="vsc-tb768">R$ {p.price}</td>
                                     <td className="vsc-txt-left">{p.name}</td>
-                                    <td><img className="vsc-product-listing-btn" src={editIcon} alt="Editar"/></td>
+                                    <td><img className="vsc-product-listing-btn" onClick={()=>{handleEdit(p.id)}} src={editIcon} alt="Editar"/></td>
                                     <td ><img className="vsc-product-listing-btn" onClick={()=>handleDelete(p.id)} src={deleteIcon} alt="Deletar"/></td>
                                 </tr>
                             ))

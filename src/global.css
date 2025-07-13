@@ -273,16 +273,9 @@ nav a {
   display: none;
 }
 
-.vsc-select:invalid {
-  color: var(--vsc-color-font-placeholder);
-}
-
-.vsc-select option[disabled] {
-  display: none;
-}
-
-.vsc-select option {
-  color: var(--vsc-color-font-primary);
+.vsc-form-select-container {
+  padding: unset;
+  height: unset;
 }
 
 .vsc-textarea {

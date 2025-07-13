@@ -1,14 +1,16 @@
 import { Link, useParams } from 'react-router-dom';
 import './formSty.css'
 import FormInput from '../../../components/forms/formInput';
-import { toDirty, update, updateAll, validate } from '../../../utils/forms';
+import { dirtyValidateAll, hasAnyInvalid, setBackendErrors, toDirty, toValues, update, updateAll, validate } from '../../../utils/forms';
 import { useEffect, useState } from 'react';
-import { findById } from '../../../services/productServices';
+import { findById, insertRequest, updateRequest } from '../../../services/productServices';
 import FormTextArea from '../../../components/forms/formText';
 import type { CategoryDTO } from '../../../models/category';
 import { findCategorys } from '../../../services/categoryServices';
 
 import FormSelect from '../../../components/forms/formSelect';
+import { selectStyles } from '../../../utils/select';
+import { navigateTo } from '../../../services/navigationService';
 
 export default function  ProductForm(){
 
@@ -99,15 +101,42 @@ export default function  ProductForm(){
         }
 
         function handleTurnDirty(name: string){
-            console.log("detro--fora",formData[name])
             setFormData(prev=>(toDirty(prev, name)))
         }
 
+    function handleSubmit(e:any){
+        e.preventDefault();
+
+        const formDataValidated = dirtyValidateAll(formData);
+        if(hasAnyInvalid(formDataValidated)){
+            setFormData(formDataValidated)
+            return;
+        }
+        const requestBody = toValues(formData);
+        if(isEditing){
+            requestBody.id=params.productId;
+        }
+
+        const request = isEditing 
+        ? updateRequest(requestBody)
+        : insertRequest(requestBody)
+
+        request
+            .then(res=>{
+                console.log("sucess---",res);
+                navigateTo("/admin/products")
+            })
+            .catch(err=>{
+                const newInputs = setBackendErrors(formData, err.response.data.errors);
+                setFormData(newInputs)
+                console.log(err.response.data.errors)
+            });
+    }
     return(
         <main>
             <section id="product-form-section" className="vsc-container">
                 <div className="vsc-product-form-container">
-                <form className="vsc-card vsc-form">
+                <form className="vsc-card vsc-form" onSubmit={handleSubmit}>
                     <h2>Dados do produto</h2>
                     <div className="vsc-form-controls-container">
                         <div>
@@ -138,8 +167,9 @@ export default function  ProductForm(){
                         </div>
                         <div>
                             <FormSelect
-                                className="vsc-form-control vsc-select" 
-                                
+                                className="vsc-form-select-container vsc-form-control vsc-select" 
+                                styles={selectStyles}
+
                                 onChange={((obj:any)=>setFormData((prev)=>{
                                     const up = update(prev,"categories",obj)
                                     return validate(up, "categories");
