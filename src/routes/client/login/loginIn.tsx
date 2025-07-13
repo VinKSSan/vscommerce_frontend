@@ -14,6 +14,8 @@ export default function Login(){
 
     const navigate  =useNavigate();
 
+    const [submitResponseFail, setSubmitResponseFail] = useState(false);
+
     const [formData, setFormData] = useState({
         username: {
             value: "",
@@ -45,6 +47,14 @@ export default function Login(){
 
     function handleSubmit(e:React.FormEvent){
         e.preventDefault();
+
+        setSubmitResponseFail(false)
+        const formDataValidated = forms.dirtyValidateAll(formData);
+        if(forms.hasAnyInvalid(formDataValidated)){
+            setFormData(formDataValidated)
+            return;
+        }
+
         authService.loginRequest(forms.toValues(formData))
             .then(res=>{
                 authService.login(res.data.access_token)
@@ -54,6 +64,7 @@ export default function Login(){
             })
             .catch(err=>{
                 console.error("pal...",err)
+                setSubmitResponseFail(true)
             })
     }
 
@@ -97,7 +108,11 @@ export default function Login(){
                                 <div className='vsc-form-error' >{formData.password.message}</div>
                             </div>
                         </div>
-
+                        {submitResponseFail && (
+                            <div className='vsc-form-global-error'>
+                                usuario ou senha invalidos
+                            </div>
+                        )}
                         <div className="vsc-login-form-buttons vsc-mt20">
                             <button type="submit" className="vsc-btn vsc-btn-blue">Entrar</button>
                         </div>

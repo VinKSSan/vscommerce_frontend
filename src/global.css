@@ -273,6 +273,17 @@ nav a {
   display: none;
 }
 
+.vsc-form-global-error{
+  border: 1px solid  var(--vsc-color-error);
+  border-radius: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 5px 10px;
+  font-size: 12px;
+  color:  var(--vsc-color-error);
+}
+
 .vsc-form-select-container {
   padding: unset;
   height: unset;
