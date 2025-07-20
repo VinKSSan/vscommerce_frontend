@@ -1,69 +1,33 @@
-# React + TypeScript + Vite
+VSCommerce é um exemplo de E-commerce moderno, construído com **arquitetura modular** e **boas práticas de programação**.  
+O projeto é **fullstack**, composto por:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- **Frontend em ReactJS:** Interface intuitiva, acesso controlado por **token** e comunicação com a API backend via **Axios**.  
+- **Backend em Java Spring Boot:** Arquitetura em camadas, tratamento de exceções personalizado, autenticação e controle de acesso via **OAuth2 e JWT**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## **Principais funcionalidades da interface**
+A interface, embora simples em termos de estilização, é **intuitiva e poderosa**, oferecendo:
 
-## Expanding the ESLint configuration
+- **Gerenciamento de rotas com autenticação e autorização**  
+  Proteção de rotas com lógica de login e perfis de usuário (admin, cliente, etc.).
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Requisições estruturadas à API**  
+  Comunicação organizada e limpa com o backend usando Axios.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Validação de formulários**  
+  Garantia de que os dados enviados estejam corretos por meio de regras **client-side**.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- **CRUD completo**  
+  Permite criar, ler, atualizar e deletar dados com feedback visual.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **Controle de acesso por token**  
+  Integração com o sistema de login/token do backend, garantindo sessões seguras e controladas.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Renderização condicional de componentes**  
+  Controle de acesso a recursos de uma página com base no estado ou nas permissões do usuário.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## **Sobre o projeto**
+Este sistema é um **modelo moderno de aplicação de comércio eletrônico**, desenvolvido como **projeto de conclusão do curso de Desenvolvimento Web Moderno**, ministrado pelo professor **Nélio Alves**, da escola de desenvolvimento de software [**Devsuperior**](https://devsuperior.com.br/).
